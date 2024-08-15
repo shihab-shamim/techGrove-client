@@ -1,7 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
 
 
 const LogIn = () => {
+    const navigate=useNavigate()
+    const {logIn}=useAuth()
     const handleSubmit =e =>{
         e.preventDefault()
         const form = e.target 
@@ -14,6 +18,29 @@ const LogIn = () => {
         }
 
         console.log({email,password})
+        logIn(email,password)
+        .then(result=>{
+            console.log(result.user)
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: `log in success`,
+                showConfirmButton: false,
+                timer: 1500
+              });
+              navigate('/')
+        })
+        .catch(error=>{
+            console.log(error)
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: `${error.message.split("/")[1].replace(")", "")}`,
+                showConfirmButton: false,
+                timer: 1500
+              });
+    
+        })
     }
     return (
         <div className="container mx-auto flex justify-center items-center mt-12 md:mt-36">

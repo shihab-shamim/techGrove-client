@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import useAuth from '../hooks/useAuth';
 
 const Regitration = () => {
+    const {createUser}=useAuth()
     const handleSubmit= e =>{
         e.preventDefault()
         const form = e.target 
@@ -28,7 +30,30 @@ const Regitration = () => {
                 timer: 1500
               });
         }
-        console.log({email,password,confirmPasword})
+      
+            createUser(email,password)
+            .then(result=>{
+                console.log(result.user)
+                // Swal.fire({
+                //     position: "top-end",
+                //     icon: "error",
+                //     title: `${error.message.split("/")[1].replace(")", "")}`,
+                //     showConfirmButton: false,
+                //     timer: 1500
+                //   });
+            })
+            
+        .catch (error=> {
+            // console.log(error.message.split("/")[1].replace(")", ""))
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: `${error.message.split("/")[1].replace(")", "")}`,
+                showConfirmButton: false,
+                timer: 1500
+              });
+            
+        })
 
     }
     return (
