@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import Card from "../components/Card";
 import axios from "axios";
 import { useLoaderData } from "react-router-dom";
-
-
+import Slider from "react-slider"
+const MIN=0;
+const MAX=218000;
 const Products = () => {
+    const [price,setPrice]=useState([MIN,MAX])
+    const [values,setValuse]=useState([MIN,MAX])
    const [recent,setRecent]=useState(false)
    const [brandName,setBrandName]=useState('')
    const [categories,setCategorie]=useState('All')
@@ -19,12 +22,12 @@ const Products = () => {
     // for(let i=0;i<numberOfPages; i++){
     //     pages.push(i)
     // }
- 
+
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data } = await axios.get(`http://localhost:5000/products?page=${currentPage}&size=${itemPerPage}&search=${search}&sort=${asc?'asc':'des'}&recent=${recent?'new':'old'}&categories=${categories}&brand=${brandName}`);
+                const { data } = await axios.get(`http://localhost:5000/products?page=${currentPage}&size=${itemPerPage}&search=${search}&sort=${asc?'asc':'des'}&recent=${recent?'new':'old'}&categories=${categories}&brand=${brandName}&price=${price}`);
                 setProducts(data); // Set the fetched data into the products state
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -32,7 +35,7 @@ const Products = () => {
         };
     
         fetchData();
-    }, [currentPage,itemPerPage,search,asc,recent,categories,brandName]);
+    }, [currentPage,itemPerPage,search,asc,recent,categories,brandName,price]);
     const handlePrevPage =()=>{
         if(currentPage>0){
             setCurrentPage(currentPage-1)
@@ -56,9 +59,13 @@ const Products = () => {
   const handleBrandName = e =>{
     setBrandName(e.target.value)
   }
-  console.log('brand name',brandName)
+  const handlePriceFilter = ()=>{
+    setPrice(values)
+  }
+
     return (
         <div className="min-h-screen">
+          <div>
           <div className="mt-8 w-3/4 mx-auto flex">
             <div>
             <form onSubmit={handleSearch} action="" className="flex">
@@ -119,20 +126,19 @@ const Products = () => {
                 <option value='Microlab'>Microlab</option>
                 
 
-
-
-
-
-
-
-
-
-
-
-
         
                 </select>
             </div>
+           
+          </div>
+          <div>
+          <div className="bg-orange-700  w-96 px-8 py-6 mx-auto mt-8"> 
+                <h2 className="text-xl font-bold text-black">Filter by Price</h2>
+                <h4 className="font-bold">Price:{values[0]}TK-{values[1]}TK</h4>
+                <Slider className="slider" value={values} min={MIN} max={MAX} onChange={setValuse}></Slider> 
+                <button onClick={handlePriceFilter} className=  "btn btn-secondary mt-6">Filter</button>
+                </div>
+          </div>
           </div>
                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14 justify-center items-center p-6">{products.map(product=> <Card key={product._id} product={product}></Card>)}</div>
             <div className="pagination">
