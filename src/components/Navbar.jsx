@@ -1,11 +1,25 @@
 import { Link, NavLink } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
 
 
 const Navbar = () => {
+  const {user,logOut}=useAuth()
     const navlink = <>
     <NavLink to='/'><li><a>Home</a></li></NavLink>
-    <li><a>All Categories</a></li>
+    <NavLink to='/products'><li><a>All Categories</a></li>  </NavLink>
+  
     </>
+    const handleLogOut =()=>{
+      logOut()
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: `log out success`,
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
     return (
         <div className="navbar bg-base-100">
   <div className="navbar-start">
@@ -38,7 +52,8 @@ const Navbar = () => {
     </ul>
   </div>
   <div className="navbar-end">
-    <Link to='/regitration'><a className="btn">Registration</a></Link> 
+    {/* <Link to='/regitration'><a className="btn">Registration</a></Link>  */}
+    {user?<a onClick={handleLogOut} className="btn">LogOut</a> :<Link to='/regitration'><a className="btn">Registration</a></Link> }
   </div>
 </div>
     );
