@@ -5,6 +5,9 @@ import { useLoaderData } from "react-router-dom";
 
 
 const Products = () => {
+   const [recent,setRecent]=useState(false)
+   const [categories,setCategorie]=useState('All')
+    const [asc,setAsc]=useState(true)
     const [products, setProducts] = useState([]);
     const [search,setSearch]=useState('')
     const {count} =useLoaderData()
@@ -15,12 +18,12 @@ const Products = () => {
     // for(let i=0;i<numberOfPages; i++){
     //     pages.push(i)
     // }
-    console.log(pages)
+ 
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data } = await axios.get(`http://localhost:5000/products?page=${currentPage}&size=${itemPerPage}&search=${search}`);
+                const { data } = await axios.get(`http://localhost:5000/products?page=${currentPage}&size=${itemPerPage}&search=${search}&sort=${asc?'asc':'des'}&recent=${recent?'new':'old'}&categories=${categories}`);
                 setProducts(data); // Set the fetched data into the products state
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -28,7 +31,7 @@ const Products = () => {
         };
     
         fetchData();
-    }, [currentPage,itemPerPage,search]);
+    }, [currentPage,itemPerPage,search,asc,recent,categories]);
     const handlePrevPage =()=>{
         if(currentPage>0){
             setCurrentPage(currentPage-1)
@@ -46,11 +49,14 @@ const Products = () => {
     }
     
 
-    // console.log(products); // Log the current state of products
+  const handleCategoryName = e =>{
+    setCategorie(e.target.value)
+  }
     return (
         <div className="min-h-screen">
-          <div className="mt-8 w-1/2 mx-auto">
-            <form onSubmit={handleSearch} action="">
+          <div className="mt-8 w-3/4 mx-auto flex">
+            <div>
+            <form onSubmit={handleSearch} action="" className="flex">
             <input
   type="text"
   name="search"
@@ -58,6 +64,22 @@ const Products = () => {
   className="input input-bordered input-md w-full max-w-xs" />
   <input type="submit" value='Search' name="" id=""  className="btn bg-orange-300 ml-8"/>
             </form>
+            </div>
+            <div className="ml-6">
+                <button onClick={()=>setAsc(!asc)} className="btn btn-primary">{asc?'Price: High To Low':'Price: Low To High'}</button>
+                {/* <button onClick={()=>setRecent(true)} className="btn btn-secondary">Newest Product</button> */}
+            </div>
+            <div>
+            <select onChange={handleCategoryName} value={categories} className="select select-bordered w-full max-w-xs">
+           <option   value='All'>All</option>
+           <option value='Phone'>Phone</option>
+         <option value='Laptop'>Laptop</option>
+         <option value='camera'>Camera</option>
+       <option value="Smartwatch">Smartwatch</option>
+       <option value="HeadPhone">HeadPhone</option>
+       <option value="Speaker">Speaker</option>
+</select>
+            </div>
           </div>
                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14 justify-center items-center p-6">{products.map(product=> <Card key={product._id} product={product}></Card>)}</div>
             <div className="pagination">
