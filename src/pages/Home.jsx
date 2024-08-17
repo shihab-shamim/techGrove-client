@@ -1,3 +1,5 @@
+import Baner from "../components/Baner";
+import Gallary from "../components/Gallary";
 import useAuth from "../hooks/useAuth";
 
 
@@ -6,7 +8,11 @@ const Home = () => {
     console.log(user)
     return (
         <div className="container mx-auto">
-            <h1>This is home </h1>
+            <Baner></Baner>
+            
+            <div className="mt-8">
+            <Gallary></Gallary>
+            </div>
             
         </div>
     );

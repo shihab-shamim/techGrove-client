@@ -66,8 +66,8 @@ const Products = () => {
     return (
         <div className="min-h-screen">
           <div>
-          <div className="mt-8 w-3/4 mx-auto flex">
-            <div>
+          <div className="mt-8 w-3/4 mx-auto flex flex-wrap ">
+            <div className="space-y-6">
             <form onSubmit={handleSearch} action="" className="flex">
             <input
   type="text"
@@ -77,11 +77,11 @@ const Products = () => {
   <input type="submit" value='Search' name="" id=""  className="btn bg-orange-300 ml-8"/>
             </form>
             </div>
-            <div className="ml-6">
+            <div className="ml-6 mt-6 md:mt-6 lg:mt-0">
                 <button onClick={()=>setAsc(!asc)} className="btn btn-primary">{asc?'Price: High To Low':'Price: Low To High'}</button>
                 {/* <button onClick={()=>setRecent(true)} className="btn btn-secondary">Newest Product</button> */}
             </div>
-            <div>
+            <div className="ml-6 mt-6 md:mt-6 lg:mt-0">
             <select onChange={handleCategoryName} value={categories} className="select select-bordered w-full max-w-xs">
            <option   value='All'>All Category</option>
            <option value='Phone'>Phone</option>
@@ -93,7 +93,7 @@ const Products = () => {
 </select>
 
             </div>
-            <div>
+            <div className="ml-6 mt-6 md:mt-6 lg:mt-0">
                 <select onChange={handleBrandName} className="select select-bordered w-full max-h-xs" name="" id="">
        
                 <option value="">Brand Name</option>
@@ -132,7 +132,7 @@ const Products = () => {
            
           </div>
           <div>
-          <div className="bg-orange-700  w-96 px-8 py-6 mx-auto mt-8"> 
+          <div className="bg-orange-700   max-w-96  px-8 py-6 mx-auto mt-8"> 
                 <h2 className="text-xl font-bold text-black">Filter by Price</h2>
                 <h4 className="font-bold">Price:{values[0]}TK-{values[1]}TK</h4>
                 <Slider className="slider" value={values} min={MIN} max={MAX} onChange={setValuse}></Slider> 
