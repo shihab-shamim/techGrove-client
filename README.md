@@ -4,18 +4,16 @@ Welcome to the Art & Craft Store website project! This website focuses on [selec
 
 ## Live Site
 
-Find the live website [here](https://assaiment-10-auth.web.app).
+Find the live website [here](https://jobs-task-fd3a6.web.app/).
 
 ## Features
 
 - **Responsive Design**: Optimized for mobile, tablet, and desktop views.
 - **Authentication**: Secure login and registration using email/password and social logins (Google).
-- **Private Routes**: Access control with private routes for adding, updating, and viewing craft items.
-- **CRUD Operations**: Create, Read, Update, and Delete operations for craft items.
-- **Art & Craft Categories**: Display and filter craft items based on selected subcategories.
-- **Interactive Elements**: Use of sliders, modals, and toast notifications for user interactions.
-- **Dark/Light Theme Toggle**: Implement a toggle for changing website theme.
-- **404 Page**: Custom page for handling not found routes.
+- **Search**: Users can search craft items by name.
+- **Sort**: Items can be sorted alphabetically by name.
+- **Filter**: Users can filter items based on categories.
+
 
 ## Setup
 
@@ -34,5 +32,5 @@ To run this project locally, follow these steps:
 - **Authentication**: Firebase Authentication
 
 ## project details 
-Find server side [here](https://github.com/shihab-shamim/art-cart-server).
+Find server side [here](https://github.com/shihab-shamim/techGrove-server).
 
